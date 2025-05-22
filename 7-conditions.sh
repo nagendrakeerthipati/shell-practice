@@ -1,9 +1,7 @@
 #!/bin/bash
 
-if [ "$(id -u)" -eq 0 ] then
-
+if [ "$(id -u)" -eq 0 ]; then
     echo "you are using root account"
-     
 else
     echo "you need root account to access"
     exit 1 #give otherthan 0 upto 127
@@ -11,8 +9,7 @@ else
 fi
 dnf install mysql -y
 
-if [ $? -eq 0 ] 
-then
+if [ $? -eq 0 ]; then
     echo "installing mysql is ...success"
 
 else
@@ -39,7 +36,3 @@ fi
 #     echo "Installing MySQL failed"
 #     exit 1
 # fi
-
-
-
-
