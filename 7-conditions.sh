@@ -7,4 +7,4 @@ else
     echo "you need root account to access"
 
 fi
-dnf install mysql
+dnf install mysql -y
