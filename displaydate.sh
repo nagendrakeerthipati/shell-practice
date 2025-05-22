@@ -1,3 +1,4 @@
 #!/bin/bash
+PRESENT=$(date)
 
-echo "today date is = $(date)"
+echo "today date is $PRESENT"
