@@ -1,0 +1,56 @@
+Description: 'Create EC2 with CF qith an IF Condition'
+Parameters:
+  ENV:
+    Description: 'Environment to Deploy'
+    Type: DataType
+    Default: Test
+    AllowedValues:
+      - Prod
+      - Test 
+  AMI_ID:
+    Description: 'Provide the AMI ID'
+    Type: String
+    Default:  ami-05a3e0187917e3e24
+
+
+Conditions:
+  CreateProdResouce: !Equals [ !Ref ENV, Prod]
+
+Resources:
+  MyEc2Insatnce:
+    Type: AWS::EC2::Instance 
+    DependsOn: SecurityGroup
+    Properties:
+       ImageId: !Ref AMI_ID
+       InstanceType: t2.micro
+       SecurityGroupIds: !GetAtt SecurityGroup.GroupId
+    
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        Description: 'Security Group For Ec2 Instancwe'
+        SecurityGroupDescription: 'Allo SSH'
+        GroupName: 'SSH Group'
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            CidrIp: 10.2.0.0/16
+            FromPort: 22
+            ToPort: 22
+  MountPoint:
+      Type: AWS::EC2::VolumeAttachment
+      Condition: CreateProdResouce
+      Properties:
+        InstanceId: !Ref MyEc2Insatnce
+        VolumeId: !Ref MyVolume
+        Device: /dev/sdh
+
+  MyVolume:
+      Type: AWS::EC2::Volume
+      Condition: CreateProdResouce 
+      Properties:
+        AvailabilityZone: !GetAtt MyEc2Insatnce.AvailabilityZone
+        Size: 8
+
+
+      
