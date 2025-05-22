@@ -7,3 +7,4 @@ else
     echo "you need root account to access"
 
 fi
+dnf install mysql
