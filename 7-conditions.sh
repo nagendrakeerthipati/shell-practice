@@ -3,10 +3,10 @@
 if [ "$(id -u)" -eq 0 ] then
 
     echo "you are using root account"
-     #give otherthan 0 upto 127
+     
 else
     echo "you need root account to access"
-    exit 1
+    exit 1 #give otherthan 0 upto 127
 
 fi
 dnf install mysql -y
