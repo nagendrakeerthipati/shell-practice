@@ -7,7 +7,16 @@ else
     exit 1 #give otherthan 0 upto 127
 
 fi
-dnf install mysql -y
+
+dnf list installed mysql
+
+if [ $? -ne 0]; then
+    dnf install mysql -y
+
+else
+    echo "mysql is already  installed"
+    exit 1
+fi
 
 if [ $? -eq 0 ]; then
     echo "installing mysql is ...success"
