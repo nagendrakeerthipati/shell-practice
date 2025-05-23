@@ -1,6 +1,7 @@
 #!/bin/bash
 # chcking the user is having root acess or not
-if [ "$(id -u)" -eq 0 ]; then
+userid = $(id -u)
+if [ userid -eq 0 ]; then
     echo "you are using root account"
 else
     echo "you need root account to access"
