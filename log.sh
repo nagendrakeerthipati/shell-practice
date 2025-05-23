@@ -5,6 +5,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[om"
 
+LOG_FILE=$"(mkdir -p /etc/var/shell-practice/)"
+
 userid=$(id -u) # Correct variable assignment (no $ outside of command substitution)
 
 if [ "$userid" -eq 0 ]; then
