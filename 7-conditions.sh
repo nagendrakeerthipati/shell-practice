@@ -1,12 +1,12 @@
 #!/bin/bash
-# chcking the user is having root acess or not
-userid = $(id -u)
-if [ userid -eq 0 ]; then
-    echo "you are using root account"
-else
-    echo "you need root account to access"
-    exit 1 #give otherthan 0 upto 127
 
+userid=$(id -u) # Correct variable assignment (no $ outside of command substitution)
+
+if [ "$userid" -eq 0 ]; then
+    echo "You are using the root account"
+else
+    echo "You need root account to access"
+    exit 1 # Exit code other than 0 indicates failure
 fi
 
 # we will check whithier it is installed or not
