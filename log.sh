@@ -5,7 +5,11 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[om"
 
-LOG_FILE=$"(mkdir -p /etc/var/shell-practice/)"
+LOGS_FOLDER="/var/log/shellscript-logs"
+SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
+LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
+
+mkdir -p $LOGS_FOLDER
 
 userid=$(id -u) # Correct variable assignment (no $ outside of command substitution)
 
