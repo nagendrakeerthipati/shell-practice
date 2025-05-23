@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# chcking the user is having root acess or not
 if [ "$(id -u)" -eq 0 ]; then
     echo "you are using root account"
 else
@@ -8,23 +8,25 @@ else
 
 fi
 
-dnf list installed mysql # we will check whithier it is installed or not
+# we will check whithier it is installed or not
+dnf list installed mysql
 
 if [ $? -eq 0 ]; then
-    echo "mysql is already  installed"
+    echo "mysql is already  installed ... nothing do"
 
 else
     dnf install mysql -y
-    exit 1
-fi
-
-if [ $? -eq 0 ]; then
     echo "installing mysql is ...success"
 
-else
-    echo "installing mysql is ...failure"
     exit 1
 fi
+
+# if [ $? -eq 0 ]; then
+
+# else
+#     echo "installing mysql is ...failure"
+#     exit 1
+# fi
 # #!/bin/bash
 
 # # Check if user is root
