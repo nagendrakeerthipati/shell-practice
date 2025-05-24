@@ -36,7 +36,8 @@ VALIDATE() {
     fi
 }
 
-for package in $@; do
+# for package in ${PACKAGES[@]}; do ------- inside the code we need to mention what all packages we need
+for package in $@; do # if we use $@ means we can give arugments for outside also
 
     dnf list installed $package &>>$LOG_FILE
     if [ $? -ne 0 ]; then
