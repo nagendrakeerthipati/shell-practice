@@ -14,7 +14,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shellscript-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-PACKAGES=("nginx" "httpd" "pythin3" "mysql") #----------using array method we store the arguments
+PACKAGE=("nginx" "httpd" "pythin3" "mysql") #----------using array method we store the arguments
 
 mkdir -p $LOGS_FOLDER
 echo "Script started executing at: $(date)" | tee -a $LOG_FILE
@@ -44,6 +44,6 @@ for package in ${PACKAGE[@]}; do
         dnf install $PACKAGE -y &>>$LOG_FILE
         VALIDATE $? "$PACKAGE"
     else
-        echo -e "Nothing to do PACKAGE... $Y already installed $N" | tee -a $LOG_FILE
+        echo -e "Nothing to do $PACKAGE... $Y already installed $N" | tee -a $LOG_FILE
     fi
 done
