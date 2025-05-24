@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# for loop syntax
+# for i in {1..100}
+# do
+#     echo $i
+# done
+
 USERID=$(id -u)
 R="\e[31m"
 G="\e[32m"
@@ -8,6 +14,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shellscript-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
+PACKAGE=("nginx" "httpd" "pythin3" "mysql") #----------using array method we store the arguments
 
 mkdir -p $LOGS_FOLDER
 echo "Script started executing at: $(date)" | tee -a $LOG_FILE
@@ -29,88 +36,14 @@ VALIDATE() {
     fi
 }
 
-dnf list installed mysql &>>$LOG_FILE
-if [ $? -ne 0 ]; then
-    echo "MySQL is not installed... going to install it" | tee -a $LOG_FILE
-    dnf install mysql -y &>>$LOG_FILE
-    VALIDATE $? "MySQL"
-else
-    echo -e "Nothing to do MySQL... $Y already installed $N" | tee -a $LOG_FILE
-fi
+for package in ${PACKAGE[@]}; do
 
-dnf list installed python3 &>>$LOG_FILE
-if [ $? -ne 0 ]; then
-    echo "python3 is not installed... going to install it" | tee -a $LOG_FILE
-    dnf install python3 -y &>>$LOG_FILE
-    VALIDATE $? "python3"
-else
-    echo -e "Nothing to do python... $Y already installed $N" | tee -a $LOG_FILE
-fi
-
-dnf list installed nginx &>>$LOG_FILE
-if [ $? -ne 0 ]; then
-    echo "nginx is not installed... going to install it" | tee -a $LOG_FILE
-    dnf install nginx -y &>>$LOG_FILE
-    VALIDATE $? "nginx"
-else
-    echo -e "Nothing to do nginx... $Y already installed $N" | tee -a $LOG_FILE
-fi
-
-# #!/bin/bash
-# R="\e[31m"
-# G="\e[32m"
-# Y="\e[33m"
-# N="\e[om"
-
-# LOGS_FOLDER="/var/log/shellscript-logs"
-# SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-# LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-
-# mkdir -p $LOGS_FOLDER
-
-# userid=$(id -u) # Correct variable assignment (no $ outside of command substitution)
-
-# if [ "$userid" -eq 0 ]; then
-#     echo -e "You are using the root account"
-# else
-#     echo "You need root account to access"
-#     exit 1 # Exit code other than 0 indicates failure
-# fi
-
-# VALIDATE() {
-#     if [ $1 -eq 0 ]; then
-#         echo -e "$G Installing $2 is success $N"
-#     else
-#         echo -e "$R installing $2 is ...failure $N"
-#         exit 1
-#     fi
-# }
-
-# # we will check whithier it is installed or not
-# dnf list installed mysql
-
-# if [ $? -ne 0 ]; then
-#     echo -e "$G mysql is not  installed ...going to install it $N" | tee -a $LOG_FILE
-#     dnf install mysql -y | tee -a $LOG_FILE
-#     VALIDATE $? "mysql"
-# else
-#     echo -e "$G mysql is already installed....nothing to do $N" | tee -a $LOG_FILE
-# fi
-
-# dnf list installed python3
-# if [ $? -ne 0 ]; then
-#     echo -e "$G python3 is not  installed ...going to install it $N" | tee -a $LOG_FILE
-#     dnf install python -y | tee -a $LOG_FILE
-#     VALIDATE $? "python3"
-# else
-#     echo -e "$Y python3 is already installed....nothing to do $N" | tee -a $LOG_FILE
-# fi
-
-# dnf list installed nginx
-# if [ $? -ne 0 ]; then
-#     echo -e "$G nginx is not  installed ...going to install it $N" | tee -a &<<$LOG_FILE
-#     dnf install nginx -y | tee -a $LOG_FILE
-#     VALIDATE $? "nginx"
-# else
-#     echo -e "$G nginx is already installed....nothing to do $N" | tee -a &<<$LOG_FILE
-# fi
+    dnf list installed PACKAGE &>>$LOG_FILE
+    if [ $? -ne 0 ]; then
+        echo "PACKAGE is not installed... going to install it" | tee -a $LOG_FILE
+        dnf install PACKAGE -y &>>$LOG_FILE
+        VALIDATE $? "PACKAGE"
+    else
+        echo -e "Nothing to do PACKAGE... $Y already installed $N" | tee -a $LOG_FILE
+    fi
+done
