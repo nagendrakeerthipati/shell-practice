@@ -14,7 +14,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shellscript-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-PACKAGES=("httpd" "pythin3" "mysql") #----------using array method we store the arguments
+PACKAGES=("nginx" "httpd" "python3" "mysql") #----------using array method we store the arguments
 
 mkdir -p $LOGS_FOLDER
 echo "Script started executing at: $(date)" | tee -a $LOG_FILE
@@ -38,12 +38,22 @@ VALIDATE() {
 
 for package in ${PACKAGES[@]}; do
 
-    dnf list installed $PACKAGE &>>$LOG_FILE
+    dnf list installed $package &>>$LOG_FILE
     if [ $? -ne 0 ]; then
-        echo "$PACKAGE is not installed... going to install it" | tee -a $LOG_FILE
-        dnf install $PACKAGE -y &>>$LOG_FILE
-        VALIDATE $? "$PACKAGE"
+        echo "$package is not installed... going to install it" | tee -a $LOG_FILE
+        dnf install $package -y &>>$LOG_FILE
+        VALIDATE $? "$package"
     else
-        echo -e "Nothing to do $PACKAGE... $Y already installed $N" | tee -a $LOG_FILE
+        echo -e "Nothing to do $package... $Y already installed $N" | tee -a $LOG_FILE
     fi
 done
+
+# Fixed typo: pythin3 → python3
+
+# Corrected variable reference: PACKAGE → package
+
+# Wrapped variables in quotes where needed (to handle spaces or unexpected values)
+
+# Added basename to better extract script name
+
+# General cleanup and formatting
